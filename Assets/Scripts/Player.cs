@@ -186,6 +186,7 @@ public class Player : MonoBehaviour
     {
         if (Time.fixedTime >= timeToGo)
         {
+            IncreaseHunger();
             IncreaseThirst();
             m_currentState.Update(this);
 
