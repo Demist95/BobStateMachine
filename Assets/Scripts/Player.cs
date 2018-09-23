@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
     //-----------------------------------------------------------------------------
     public bool WinMoney()
     {
-        return Random.value > 0.33f ? true : false;
+        return Random.value > 0.66f ? true : false;
     }
 
     //-----------------------------------------------------------------------------

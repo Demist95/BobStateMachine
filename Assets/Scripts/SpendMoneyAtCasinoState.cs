@@ -15,7 +15,6 @@ public class SpendMoneyAtCasinoState : IState
 
     public void Update(Player player)
     {
-        // win
         if (player.WinMoney())
         {
             player.AddToGoldCarried(3);
@@ -23,11 +22,10 @@ public class SpendMoneyAtCasinoState : IState
             player.ChangeState(new VisitBankAndDepositGoldState());
         }
 
-        // lose
         else
         {
             player.RemoveFromBank(3);
-            Debug.Log("Dangit, now my moneys gone");
+            Debug.Log("Dangit, now my moneys gone. Only got " + player.GetMoneyInBank() + " nugz");
             player.ChangeState(new GoHomeAndSleepTilRestedState());
         }
     }
