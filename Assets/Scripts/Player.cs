@@ -7,6 +7,8 @@ public enum Location { shack, goldmine, bank, saloon, restaurant, casino }
 
 public class Player : MonoBehaviour
 {
+    private float timeToGo;
+
     private const int ComfortLevel = 5;
     private const int MaxNuggets = 3;
     private const int ThirstLevel = 5;
@@ -80,6 +82,11 @@ public class Player : MonoBehaviour
         m_moneyInBank += val;
     }
 
+    public void RemoveFromBank(int val)
+    {
+        m_moneyInBank -= val;
+    }
+
     //-----------------------------------------------------------------------------
     public int GetThirst()
     {
@@ -100,6 +107,11 @@ public class Player : MonoBehaviour
     {
         m_thirst = 0;
         m_moneyInBank -= 2;
+    }
+
+    public bool Drunk()
+    {
+        return Random.value > 0.50f ? true : false;
     }
 
     //-----------------------------------------------------------------------------
@@ -146,7 +158,10 @@ public class Player : MonoBehaviour
     }
 
     //-----------------------------------------------------------------------------
-
+    public bool WinMoney()
+    {
+        return Random.value > 0.33f ? true : false;
+    }
 
     //-----------------------------------------------------------------------------
     public int GetComfortLevel()
@@ -161,9 +176,21 @@ public class Player : MonoBehaviour
         m_location = Location.goldmine;
     }
 
-    private void Update()
+    private void Start()
     {
-        IncreaseThirst();
-        m_currentState.Update(this);
+        timeToGo = Time.fixedTime + 0.0f;
+    }
+
+    // Run every 3 seconds
+    private void FixedUpdate()
+    {
+        if (Time.fixedTime >= timeToGo)
+        {
+            IncreaseThirst();
+            m_currentState.Update(this);
+
+            timeToGo = Time.fixedTime + 3.0f;
+        }
+
     }
 }

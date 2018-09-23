@@ -15,11 +15,25 @@ public class SpendMoneyAtCasinoState : IState
 
     public void Update(Player player)
     {
+        // win
+        if (player.WinMoney())
+        {
+            player.AddToGoldCarried(3);
+            Debug.Log("w00t. time to cash out");
+            player.ChangeState(new VisitBankAndDepositGoldState());
+        }
 
+        // lose
+        else
+        {
+            player.RemoveFromBank(3);
+            Debug.Log("Dangit, now my moneys gone");
+            player.ChangeState(new GoHomeAndSleepTilRestedState());
+        }
     }
 
     public void OnStateExit(Player player)
     {
-
+        Debug.Log("Leavin' casino");
     }
 }

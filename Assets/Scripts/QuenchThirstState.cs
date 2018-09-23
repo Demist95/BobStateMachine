@@ -20,7 +20,17 @@ public class QuenchThirstState : IState
         {
             player.BuyAndDrinkAWhisky();
             Debug.Log("That's mighty fine sippin liquer");
-            player.ChangeState(new EnterMineAndDigForNuggetState());
+            if (player.Drunk())
+            {
+                Debug.Log("That whisky strong!!!1!");
+                player.ChangeState(new SpendMoneyAtCasinoState());
+            }
+
+            else
+            {
+                Debug.Log("Back to work");
+                player.ChangeState(new EnterMineAndDigForNuggetState());
+            }
         }
 
         else
