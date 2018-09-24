@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-public enum Location { shack, goldmine, bank, saloon, restaurant, casino }
+public enum Location { Shack, Goldmine, Bank, Saloon, Restaurant, Casino }
 
 public class Player : MonoBehaviour
 {
-    private float timeToGo;
+    private float _timeToGo;
 
     private const int ComfortLevel = 5;
     private const int MaxNuggets = 3;
@@ -15,98 +12,98 @@ public class Player : MonoBehaviour
     private const int TirednessThreshold = 5;
     private const int HungerLevel = 8;
 
-    private IState m_currentState;
-    private Location m_location;
-    private int m_goldCarried;
-    private int m_moneyInBank;
-    private int m_thirst;
-    private int m_fatigue;
-    private int m_hunger;
+    private IState _currentState;
+    private Location _location;
+    private int _goldCarried;
+    private int _moneyInBank;
+    private int _thirst;
+    private int _fatigue;
+    private int _hunger;
 
     //public methods:
     //-----------------------------------------------------------------------------
     public void ChangeState(IState newState)
     {
-        m_currentState.OnStateExit(this);
-        m_currentState = newState;
-        m_currentState.OnStateEnter(this);
+        _currentState.OnStateExit(this);
+        _currentState = newState;
+        _currentState.OnStateEnter(this);
     }
 
     public IState GetCurrentState()
     {
-        return m_currentState;
+        return _currentState;
     }
 
     //-----------------------------------------------------------------------------
     public Location GetLocation()
     {
-        return m_location;
+        return _location;
     }
 
     public void SetLocation(Location location)
     {
-        m_location = location;
+        _location = location;
     }
 
     //-----------------------------------------------------------------------------
     public int GetGoldCarried()
     {
-        return m_goldCarried;
+        return _goldCarried;
     }
 
     public void SetGoldCarried(int val)
     {
-        m_goldCarried = val;
+        _goldCarried = val;
     }
 
     public void AddToGoldCarried(int val)
     {
-        m_goldCarried += val;
-        if (m_goldCarried < 0)
-            m_goldCarried = 0;
+        _goldCarried += val;
+        if (_goldCarried < 0)
+            _goldCarried = 0;
     }
 
     public bool PocketsFull()
     {
-        return m_goldCarried >= MaxNuggets;
+        return _goldCarried >= MaxNuggets;
     }
 
     //-----------------------------------------------------------------------------
     public int GetMoneyInBank()
     {
-        return m_moneyInBank;
+        return _moneyInBank;
     }
 
     public void AddToWealth(int val)
     {
-        m_moneyInBank += val;
+        _moneyInBank += val;
     }
 
     public void RemoveFromBank(int val)
     {
-        m_moneyInBank -= val;
+        _moneyInBank -= val;
     }
 
     //-----------------------------------------------------------------------------
     public int GetThirst()
     {
-        return m_thirst;
+        return _thirst;
     }
 
     public void IncreaseThirst()
     {
-        m_thirst += 1;
+        _thirst += 1;
     }
 
     public bool Thirsty()
     {
-        return m_thirst >= ThirstLevel;
+        return _thirst >= ThirstLevel;
     }
 
     public void BuyAndDrinkAWhisky()
     {
-        m_thirst = 0;
-        m_moneyInBank -= 2;
+        _thirst = 0;
+        _moneyInBank -= 2;
     }
 
     public bool Drunk()
@@ -117,44 +114,44 @@ public class Player : MonoBehaviour
     //-----------------------------------------------------------------------------
     public int GetFatigue()
     {
-        return m_fatigue;
+        return _fatigue;
     }
 
     public void IncreaseFatigue()
     {
-        m_fatigue += 1;
+        _fatigue += 1;
     }
 
     public void DecreaseFatigue()
     {
-        m_fatigue -= 1;
+        _fatigue -= 1;
     }
 
     public bool Fatigued()
     {
-        return m_fatigue >= TirednessThreshold;
+        return _fatigue >= TirednessThreshold;
     }
 
     //-----------------------------------------------------------------------------
     public int GetHunger()
     {
-        return m_hunger;
+        return _hunger;
     }
 
     public void IncreaseHunger()
     {
-        m_hunger += 1;
+        _hunger += 1;
     }
 
     public bool Hungry()
     {
-        return m_hunger >= HungerLevel;
+        return _hunger >= HungerLevel;
     }
 
     public void BuyAndEatFood()
     {
-        m_hunger = 0;
-        m_moneyInBank -= 2;
+        _hunger = 0;
+        _moneyInBank -= 2;
     }
 
     //-----------------------------------------------------------------------------
@@ -172,26 +169,22 @@ public class Player : MonoBehaviour
     //private methods:
     private void Awake()
     {
-        m_currentState = new EnterMineAndDigForNuggetState();
-        m_location = Location.goldmine;
+        _currentState = new EnterMineAndDigForNuggetState();
+        _location = Location.Goldmine;
     }
 
     private void Start()
     {
-        timeToGo = Time.fixedTime + 0.0f;
+        _timeToGo = Time.fixedTime + 0.0f;
     }
 
     // Run every 3 seconds
     private void FixedUpdate()
     {
-        if (Time.fixedTime >= timeToGo)
-        {
-            IncreaseHunger();
-            IncreaseThirst();
-            m_currentState.Update(this);
-
-            timeToGo = Time.fixedTime + 3.0f;
-        }
-
+        if (!(Time.fixedTime >= _timeToGo)) return;
+        IncreaseHunger();
+        IncreaseThirst();
+        _currentState.Update(this);
+        _timeToGo = Time.fixedTime + 3.0f;
     }
 }

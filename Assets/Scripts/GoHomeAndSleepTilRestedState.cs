@@ -6,10 +6,10 @@ public class GoHomeAndSleepTilRestedState : IState
 {
     public void OnStateEnter(Player player)
     {
-        if (player.GetLocation() != Location.shack)
+        if (player.GetLocation() != Location.Shack)
         {
             Debug.Log("Walkin home");
-            player.SetLocation(Location.shack);
+            player.SetLocation(Location.Shack);
         }
     }
 

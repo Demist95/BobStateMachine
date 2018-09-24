@@ -6,11 +6,9 @@ public class GetSomethingToEatState : IState
 {
     public void OnStateEnter(Player player)
     {
-        if (player.GetLocation() != Location.restaurant)
-        {
-            Debug.Log("Mah belly's purrin'. Time to gulp down a corndog yeehaa");
-            player.SetLocation(Location.restaurant);
-        }
+        if (player.GetLocation() == Location.Restaurant) return;
+        Debug.Log("Mah belly's purrin'. Time to gulp down a corndog yeehaa");
+        player.SetLocation(Location.Restaurant);
     }
 
     public void Update(Player player)

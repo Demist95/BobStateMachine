@@ -7,11 +7,9 @@ public class VisitBankAndDepositGoldState : IState
 
     public void OnStateEnter(Player player)
     {
-        if (player.GetLocation() != Location.bank)
-        {
-            Debug.Log("Goin' to the bank. Yes siree");
-            player.SetLocation(Location.bank);
-        }
+        if (player.GetLocation() == Location.Bank) return;
+        Debug.Log("Goin' to the bank. Yes siree");
+        player.SetLocation(Location.Bank);
     }
 
     public void Update(Player player)

@@ -6,11 +6,9 @@ public class SpendMoneyAtCasinoState : IState
 {
     public void OnStateEnter(Player player)
     {
-        if (player.GetLocation() != Location.casino)
-        {
-            Debug.Log("Time to spend some of my hard-earned cash.");
-            player.SetLocation(Location.restaurant);
-        }
+        if (player.GetLocation() == Location.Casino) return;
+        Debug.Log("Time to spend some of my hard-earned cash.");
+        player.SetLocation(Location.Restaurant);
     }
 
     public void Update(Player player)
@@ -24,7 +22,7 @@ public class SpendMoneyAtCasinoState : IState
 
         else
         {
-            player.RemoveFromBank(3);
+            player.SetGoldCarried(0);
             Debug.Log("Dangit, now my moneys gone. Only got " + player.GetMoneyInBank() + " nugz");
             player.ChangeState(new GoHomeAndSleepTilRestedState());
         }

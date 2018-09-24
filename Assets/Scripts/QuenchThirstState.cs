@@ -7,10 +7,10 @@ public class QuenchThirstState : IState
 
     public void OnStateEnter(Player player)
     {
-        if (player.GetLocation() != Location.saloon)
+        if (player.GetLocation() != Location.Saloon)
         {
             Debug.Log("Boy, ah sure is thusty! Walking to the saloon");
-            player.SetLocation(Location.saloon);
+            player.SetLocation(Location.Saloon);
         }
     }
 

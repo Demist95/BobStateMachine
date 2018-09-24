@@ -7,11 +7,9 @@ public class EnterMineAndDigForNuggetState : IState
 
     public void OnStateEnter(Player player)
     {
-        if (player.GetLocation() != Location.goldmine)
-        {
-            Debug.Log("Walkin' to the goldmine");
-            player.SetLocation(Location.goldmine);
-        }
+        if (player.GetLocation() == Location.Goldmine) return;
+        Debug.Log("Walkin' to the goldmine");
+        player.SetLocation(Location.Goldmine);
     }
 
     public void Update(Player player)
@@ -28,11 +26,9 @@ public class EnterMineAndDigForNuggetState : IState
             player.ChangeState(new VisitBankAndDepositGoldState());
         }
 
-        if (player.Thirsty())
-        {
-            Debug.Log("Thirst AF! Going for some beer");
-            player.ChangeState(new QuenchThirstState());
-        }
+        if (!player.Thirsty()) return;
+        Debug.Log("Thirst AF! Going for some beer");
+        player.ChangeState(new QuenchThirstState());
     }
 
     public void OnStateExit(Player player)
